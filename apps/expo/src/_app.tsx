@@ -2,8 +2,6 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { TRPCProvider } from "./utils/trpc";
-
-import { HomeScreen } from "./screens/home";
 import { SignInSignUpScreen } from "./screens/signin";
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
 import { tokenCache } from "./utils/cache";
@@ -12,14 +10,32 @@ import { ApplicationProvider } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import { default as theme } from "../theme.json";
 import { NavigationContainer } from "@react-navigation/native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BottomNavigation } from "./navigation/BottomNavigation";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Settings } from "./screens/settings/settings";
+import { ROUTES } from "./constants";
+import { DrawerNavigation } from "./navigation/DrawerNavigation";
+// const HomeScreenButton = ({ onPress }: { onPress: () => void }) => {
+//   return (
+//     <TouchableOpacity onPress={onPress}>
+//       <View
+//         style={{
+//           width: 50,
+//           height: 50,
 
+//           borderRadius: 25,
+//           backgroundColor: "blue",
+//           justifyContent: "center",
+//           alignItems: "center",
+//         }}
+//       >
+//         <Text style={{ color: "#fff", fontSize: 18 }}>Button</Text>
+//       </View>
+//     </TouchableOpacity>
+//   );
+// };
 const Stack = createNativeStackNavigator();
-
-enum Screens {
-  Home = "Home",
-  SignIn = "Sign in",
-}
 
 export const App = () => {
   return (
@@ -27,32 +43,47 @@ export const App = () => {
       publishableKey={Constants.expoConfig?.extra?.CLERK_PUBLISHABLE_KEY}
       tokenCache={tokenCache}
     >
-      <ApplicationProvider {...eva} theme={{ ...eva.dark, ...theme }}>
-        <SignedIn>
-          <TRPCProvider>
-            <SafeAreaProvider>
-              <StatusBar style="light" />
-
-              <NavigationContainer>
-                <Stack.Navigator
-                  screenOptions={{
-                    headerTransparent: true,
-                    headerTitleStyle: {
-                      fontWeight: "bold",
-                      color: "#fff",
-                    },
-                  }}
-                >
-                  <Stack.Screen name={Screens.Home} component={HomeScreen} />
-                </Stack.Navigator>
-              </NavigationContainer>
-            </SafeAreaProvider>
-          </TRPCProvider>
-        </SignedIn>
-        <SignedOut>
-          <SignInSignUpScreen />
-        </SignedOut>
-      </ApplicationProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <ApplicationProvider {...eva} theme={{ ...eva.dark, ...theme }}>
+          <SignedIn>
+            <TRPCProvider>
+              <SafeAreaProvider>
+                <StatusBar style="light" />
+                <NavigationContainer>
+                  <Stack.Navigator
+                    screenOptions={{
+                      headerTransparent: true,
+                      headerTitleAlign: "center",
+                      headerTitleStyle: {
+                        fontWeight: "bold",
+                        color: "#fff",
+                      },
+                    }}
+                  >
+                    <Stack.Screen
+                      name="MainScreen"
+                      component={DrawerNavigation}
+                      options={{
+                        headerShown: false,
+                      }}
+                    />
+                    <Stack.Screen
+                      name="Settings"
+                      component={Settings}
+                      options={{
+                        presentation: "modal",
+                      }}
+                    />
+                  </Stack.Navigator>
+                </NavigationContainer>
+              </SafeAreaProvider>
+            </TRPCProvider>
+          </SignedIn>
+          <SignedOut>
+            <SignInSignUpScreen />
+          </SignedOut>
+        </ApplicationProvider>
+      </GestureHandlerRootView>
     </ClerkProvider>
   );
 };

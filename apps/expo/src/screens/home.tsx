@@ -16,7 +16,6 @@ import TasksView from "../components/Tasks/TasksView";
 export const HomeScreen = () => {
   // const postQuery = trpc.post.all.useQuery();
   // const [showPost, setShowPost] = React.useState<string | null>(null);
-
   return (
     <Layout level="1" style={style.container}>
       <SafeAreaView>
@@ -32,8 +31,9 @@ export const HomeScreen = () => {
 
 const style = StyleSheet.create({
   container: {
-    height: "100%",
-    width: "100%",
+    // height: "100%",
+    // width: "100%",
+    flex: 1,
   },
 });
 
