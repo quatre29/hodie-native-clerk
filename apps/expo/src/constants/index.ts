@@ -1,3 +1,5 @@
 import ROUTES from "./routes";
+import IMAGES from "./images";
+import COLORS from "./colors";
 
-export { ROUTES };
+export { ROUTES, IMAGES, COLORS };

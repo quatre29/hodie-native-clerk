@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-import { Layout, Button } from "@ui-kitten/components";
+import { Layout } from "@ui-kitten/components";
 
 export const Settings = () => {
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { Dimensions, TouchableWithoutFeedback } from "react-native";
 import { Text } from "@ui-kitten/components";
 import {
   PanGestureHandler,
@@ -14,6 +14,8 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { ROUTES } from "../../constants";
 
 type TaskProps = Pick<PanGestureHandlerProps, "simultaneousHandlers">;
 
@@ -26,14 +28,19 @@ const Task = (props: TaskProps) => {
   const [taskOnCompleteThreshold, setTaskOnCompleteThreshold] = useState(false);
   const [taskOnDismissedThreshold, setTaskOnDismissedThreshold] =
     useState(false);
+  const [isSwipeGestureActive, setIsSwipeGestureActive] = useState(false);
 
   const translateX = useSharedValue(0);
   const itemHeight = useSharedValue(TASK_ITEM_HEIGHT + 15);
   const marginVertical = useSharedValue(10);
   const opacity = useSharedValue(1);
 
+  const navigation = useNavigation();
+
   const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
     onActive: (event) => {
+      runOnJS(setIsSwipeGestureActive)(true);
+
       const shouldBeDismissed =
         translateX.value < TRANSLATE_X_THRESHOLD_DISMISSED;
       const shouldBeCompleted =
@@ -52,6 +59,8 @@ const Task = (props: TaskProps) => {
       }
     },
     onEnd: () => {
+      runOnJS(setIsSwipeGestureActive)(false);
+
       const shouldBeDismissed =
         translateX.value < TRANSLATE_X_THRESHOLD_DISMISSED;
       const shouldBeCompleted =
@@ -77,6 +86,16 @@ const Task = (props: TaskProps) => {
       }
     },
   });
+
+  function handleNavigation() {
+    console.log(isSwipeGestureActive, "--");
+
+    if (!isSwipeGestureActive) {
+      console.log(isSwipeGestureActive, "-++++-");
+
+      navigation.navigate(ROUTES.TASK as never);
+    }
+  }
 
   const rStyle = useAnimatedStyle(() => ({
     transform: [
@@ -147,7 +166,9 @@ const Task = (props: TaskProps) => {
               : "bg-slate-700"
           } pl-10`}
         >
-          <Text category="h2">TASKaasAAAs</Text>
+          <TouchableWithoutFeedback onPress={handleNavigation}>
+            <Text category="h2">TASKaasAAAs</Text>
+          </TouchableWithoutFeedback>
         </Animated.View>
       </PanGestureHandler>
     </Animated.View>

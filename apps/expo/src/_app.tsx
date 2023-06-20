@@ -16,6 +16,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Settings } from "./screens/settings/settings";
 import { ROUTES } from "./constants";
 import { DrawerNavigation } from "./navigation/DrawerNavigation";
+import TaskModal from "./components/Tasks/TaskModal";
 // const HomeScreenButton = ({ onPress }: { onPress: () => void }) => {
 //   return (
 //     <TouchableOpacity onPress={onPress}>
@@ -68,8 +69,15 @@ export const App = () => {
                       }}
                     />
                     <Stack.Screen
-                      name="Settings"
+                      name={ROUTES.SETTINGS}
                       component={Settings}
+                      options={{
+                        presentation: "modal",
+                      }}
+                    />
+                    <Stack.Screen
+                      name={ROUTES.TASK}
+                      component={TaskModal}
                       options={{
                         presentation: "modal",
                       }}

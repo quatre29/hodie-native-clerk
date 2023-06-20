@@ -5,6 +5,8 @@ export default {
   EXPLORE: "Explore",
 
   SETTINGS: "Settings",
+  TASK: "Task",
 
   HOME_DRAWER: "Home Drawer",
+  HALL_OF_HONOR: "Hall of Honor",
 };
