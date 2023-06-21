@@ -17,7 +17,10 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { ROUTES } from "../../constants";
 
-type TaskProps = Pick<PanGestureHandlerProps, "simultaneousHandlers">;
+interface TaskProps
+  extends Pick<PanGestureHandlerProps, "simultaneousHandlers"> {
+  verticalScrollState: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const TRANSLATE_X_THRESHOLD_DISMISSED = -SCREEN_WIDTH * 0.25;
@@ -39,7 +42,9 @@ const Task = (props: TaskProps) => {
 
   const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
     onActive: (event) => {
+      // blocks the task modal to be opened when slide is performed
       runOnJS(setIsSwipeGestureActive)(true);
+      runOnJS(props.verticalScrollState)(false);
 
       const shouldBeDismissed =
         translateX.value < TRANSLATE_X_THRESHOLD_DISMISSED;
@@ -60,6 +65,7 @@ const Task = (props: TaskProps) => {
     },
     onEnd: () => {
       runOnJS(setIsSwipeGestureActive)(false);
+      runOnJS(props.verticalScrollState)(true);
 
       const shouldBeDismissed =
         translateX.value < TRANSLATE_X_THRESHOLD_DISMISSED;
@@ -88,11 +94,7 @@ const Task = (props: TaskProps) => {
   });
 
   function handleNavigation() {
-    console.log(isSwipeGestureActive, "--");
-
     if (!isSwipeGestureActive) {
-      console.log(isSwipeGestureActive, "-++++-");
-
       navigation.navigate(ROUTES.TASK as never);
     }
   }
