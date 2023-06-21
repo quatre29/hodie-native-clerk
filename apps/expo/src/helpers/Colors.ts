@@ -4,6 +4,6 @@ export const Colors = {
 };
 
 export const ChallengeColors = {
-  monkMode: "yellow",
+  monkMode: "red",
   fiveDays: "green",
 };

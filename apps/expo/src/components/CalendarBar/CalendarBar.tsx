@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import { ScrollView, View } from "react-native";
+import React, { useState, useRef, use } from "react";
 import { Text } from "@ui-kitten/components";
 import { DateObj, calendarHelper } from "../../helpers/calendar";
 import Day from "./Day";
@@ -7,6 +7,9 @@ import { ChallengeDay, ChallengeType } from "../../helpers/TempTypes";
 
 const CalendarBar = () => {
   const [dates, setDates] = useState(calendarHelper.generateBarDates());
+  const [scrollWidth, setScrollWidth] = useState(0);
+
+  const scrollViewRef = useRef(null);
 
   // FIXME: Temporary till we get data
   function createChallenge(type: ChallengeType): DateObj[] {
@@ -63,10 +66,14 @@ const CalendarBar = () => {
     <View className="mb-4 flex-row">
       <ScrollView
         horizontal
+        ref={scrollViewRef}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           paddingHorizontal: 50,
           paddingTop: 0,
+        }}
+        onLayout={(event) => {
+          console.log(event.nativeEvent.layout.x, "LAYOUT");
         }}
       >
         {dates.map((date, index) => (
@@ -74,6 +81,8 @@ const CalendarBar = () => {
             key={date.date.toISOString()}
             date={date.date}
             isToday={date.isToday}
+            scrollViewRef={scrollViewRef}
+            todayIndex={date.isToday ? index : undefined}
             // FIXME: Temporary till we get data
             challengeDay={getChallengeDay(date, ChallengeType.MonkMode)}
           />

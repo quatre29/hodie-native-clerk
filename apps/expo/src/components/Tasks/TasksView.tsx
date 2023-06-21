@@ -1,6 +1,4 @@
 import React, { useRef, useState } from "react";
-import { StyleSheet, View } from "react-native";
-import { Text } from "@ui-kitten/components";
 import Task from "./Task";
 import { ScrollView } from "react-native-gesture-handler";
 

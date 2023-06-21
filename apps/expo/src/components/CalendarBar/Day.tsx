@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, ScrollView, Dimensions } from "react-native";
 import { Text } from "@ui-kitten/components";
 import { DateObj } from "../../helpers/calendar";
 import { ChallengeDay, ChallengeType } from "../../helpers/TempTypes";
@@ -8,9 +8,26 @@ import { ChallengeColors } from "../../helpers/Colors";
 // FIXME: Temporary till we get data
 interface DayProps extends DateObj {
   challengeDay?: ChallengeDay;
+  scrollViewRef?: React.MutableRefObject<ScrollView | null>;
+  todayIndex?: number;
 }
 
+const { width: SCREEN_WIDTH } = Dimensions.get("window");
+
 const Day = (props: DayProps) => {
+  const [dayWidth, setDayWidth] = useState(0);
+
+  React.useEffect(() => {
+    if (props.scrollViewRef?.current && props.isToday && props.todayIndex) {
+      props.scrollViewRef.current.scrollTo({
+        animated: true,
+        // FIXME: possibly breaking on different screens: NEEDS TESTING
+        x: props.todayIndex * dayWidth - SCREEN_WIDTH / 2 + dayWidth / 2,
+        y: 0,
+      });
+    }
+  }, [dayWidth]);
+
   function getBgColor(): string {
     if (props.challengeDay?.challengeType === ChallengeType.MonkMode) {
       return ChallengeColors.monkMode;
@@ -34,9 +51,12 @@ const Day = (props: DayProps) => {
       return "rounded-r-2xl";
     }
   }
-  // `rounded-2xl bg-${getBgColor()}-500/40`
+
   return (
     <View
+      onLayout={(event) => {
+        setDayWidth(event.nativeEvent.layout.width);
+      }}
       className={`flex h-16 items-center justify-around  px-4 py-1 ${
         props.isToday && !props.challengeDay && `rounded-2xl bg-slate-600/75`
       } ${
@@ -67,9 +87,5 @@ const styles = StyleSheet.create({
   isToday: {
     fontWeight: "bold",
   },
-  dateBorder: {
-    borderColor: "red",
-    borderWidth: 2,
-    borderRadius: 100,
-  },
+  dateBorder: {},
 });
