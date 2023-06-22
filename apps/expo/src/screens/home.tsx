@@ -18,8 +18,8 @@ export const HomeScreen = () => {
   // const [showPost, setShowPost] = React.useState<string | null>(null);
   return (
     <Layout level="1" style={style.container}>
-      <SafeAreaView>
-        <View className="pt-12">
+      <SafeAreaView style={{ flex: 1 }}>
+        <View className="pt-12" style={{ flex: 1 }}>
           <CalendarBar />
           <ScreenTabTitles />
           <TasksView />
