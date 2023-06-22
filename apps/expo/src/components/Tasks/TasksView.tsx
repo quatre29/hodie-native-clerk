@@ -31,64 +31,6 @@ const TasksView = () => {
       )}
     />
   );
-
-  // return (
-  //   <ScrollView
-  //     ref={scrollRef}
-  //     showsHorizontalScrollIndicator={false}
-  //     className="mt-4 h-full w-full pb-20"
-  //     scrollEnabled={verticalScrollEnabled}
-  //   >
-  //     <Task
-  //       simultaneousHandlers={scrollRef}
-  //       verticalScrollState={setVerticalScrollEnabled}
-  //     />
-  //     <Task
-  //       simultaneousHandlers={scrollRef}
-  //       verticalScrollState={setVerticalScrollEnabled}
-  //     />
-  //     <Task
-  //       simultaneousHandlers={scrollRef}
-  //       verticalScrollState={setVerticalScrollEnabled}
-  //     />
-  //     <Task
-  //       simultaneousHandlers={scrollRef}
-  //       verticalScrollState={setVerticalScrollEnabled}
-  //     />
-  //     <Task
-  //       simultaneousHandlers={scrollRef}
-  //       verticalScrollState={setVerticalScrollEnabled}
-  //     />
-  //     <Task
-  //       simultaneousHandlers={scrollRef}
-  //       verticalScrollState={setVerticalScrollEnabled}
-  //     />
-  //     <Task
-  //       simultaneousHandlers={scrollRef}
-  //       verticalScrollState={setVerticalScrollEnabled}
-  //     />
-  //     <Task
-  //       simultaneousHandlers={scrollRef}
-  //       verticalScrollState={setVerticalScrollEnabled}
-  //     />
-  //     <Task
-  //       simultaneousHandlers={scrollRef}
-  //       verticalScrollState={setVerticalScrollEnabled}
-  //     />
-  //     <Task
-  //       simultaneousHandlers={scrollRef}
-  //       verticalScrollState={setVerticalScrollEnabled}
-  //     />
-  //     <Task
-  //       simultaneousHandlers={scrollRef}
-  //       verticalScrollState={setVerticalScrollEnabled}
-  //     />
-  //     <Task
-  //       simultaneousHandlers={scrollRef}
-  //       verticalScrollState={setVerticalScrollEnabled}
-  //     />
-  //   </ScrollView>
-  // );
 };
 
 export default TasksView;
