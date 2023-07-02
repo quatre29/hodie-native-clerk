@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Dimensions, TouchableWithoutFeedback } from "react-native";
+import { Dimensions, TouchableWithoutFeedback, View } from "react-native";
 import { Text } from "@ui-kitten/components";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
@@ -16,10 +17,12 @@ import Animated, {
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { ROUTES } from "../../constants";
+import { ITask } from "../../constants/tasks";
 
 interface TaskProps
   extends Pick<PanGestureHandlerProps, "simultaneousHandlers"> {
   verticalScrollState: React.Dispatch<React.SetStateAction<boolean>>;
+  taskItem: ITask;
 }
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
@@ -166,10 +169,22 @@ const Task = (props: TaskProps) => {
               : taskOnDismissedThreshold
               ? "border-2 border-red-700 bg-red-700/40"
               : "bg-slate-700"
-          } pl-10`}
+          } 
+          `}
         >
           <TouchableWithoutFeedback onPress={handleNavigation}>
-            <Text category="h2">TASKaasAAAs</Text>
+            <View className="h-full w-full flex-row ">
+              <View className="h-full w-1/5 items-center justify-center ">
+                <Ionicons
+                  name={props.taskItem.icon}
+                  color={props.taskItem.iconColor}
+                  size={30}
+                />
+              </View>
+              <View className="h-full flex-1 justify-center  pl-5">
+                <Text category="h5">{props.taskItem.title}</Text>
+              </View>
+            </View>
           </TouchableWithoutFeedback>
         </Animated.View>
       </PanGestureHandler>

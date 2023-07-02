@@ -46,6 +46,7 @@ const Day = (props: DayProps) => {
     }
     if (
       props.challengeDay?.dayIndex ===
+      //FIXME: non-null not allowed
       props.challengeDay!.challengeLength - 1
     ) {
       return "rounded-r-2xl";
@@ -61,7 +62,7 @@ const Day = (props: DayProps) => {
         props.isToday && !props.challengeDay && `rounded-2xl bg-slate-600/75`
       } ${
         props.challengeDay &&
-        `${getBgRoundedCorners()} bg-${getBgColor()}-500/40`
+        `${getBgRoundedCorners()} bg-${getBgColor()}-700/40`
       }`}
     >
       <Text

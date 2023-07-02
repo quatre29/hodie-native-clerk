@@ -1,12 +1,11 @@
 import React, { useRef, useState } from "react";
 import Task from "./Task";
 import { ScrollView, FlatList } from "react-native-gesture-handler";
+import { TASKS } from "../../constants/tasks";
 
 const TasksView = () => {
   const [verticalScrollEnabled, setVerticalScrollEnabled] = useState(true);
   const scrollRef = useRef(null);
-
-  const tasks = Array.from(Array(12).keys());
 
   return (
     <FlatList
@@ -20,13 +19,14 @@ const TasksView = () => {
         flex: 1,
       }}
       scrollEnabled={verticalScrollEnabled}
-      data={tasks}
-      keyExtractor={(item) => item.toString()}
-      renderItem={() => (
+      data={TASKS}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => (
         // FIXME: Waiting for data - placeholder
         <Task
           simultaneousHandlers={scrollRef}
           verticalScrollState={setVerticalScrollEnabled}
+          taskItem={item}
         />
       )}
     />

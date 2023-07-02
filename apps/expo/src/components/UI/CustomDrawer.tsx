@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React from "react";
 import {
   ImageBackground,
   StyleSheet,
@@ -13,7 +13,7 @@ import {
 } from "@react-navigation/drawer";
 import { COLORS, IMAGES } from "../../constants";
 import { useClerk, useAuth } from "@clerk/clerk-expo";
-import { Text, Button } from "@ui-kitten/components";
+import { Button } from "@ui-kitten/components";
 
 const { width } = Dimensions.get("screen");
 
