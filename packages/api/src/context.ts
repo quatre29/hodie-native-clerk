@@ -6,6 +6,7 @@ import type {
   SignedInAuthObject,
   SignedOutAuthObject,
 } from "@clerk/nextjs/api";
+import { unknown } from "zod";
 
 /**
  * Replace this with an object if you want to pass things to createContextInner
@@ -22,7 +23,7 @@ type AuthContextProps = {
 export const createContextInner = async ({ auth }: AuthContextProps) => {
   return {
     auth,
-    prisma,
+    prisma: prisma as unknown as any,
   };
 };
 

@@ -1,3 +1,6 @@
 export default {
   DRAWER_BG: "#1e293b",
+  BACKGROUND: "#27272a",
+  DARK_BACKGROUND: "#18181b",
+  GRADIENT_BACKGROUND: ["#09090b", "#27272a"],
 };

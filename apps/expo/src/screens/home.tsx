@@ -12,12 +12,14 @@ import { trpc } from "../utils/trpc";
 import CalendarBar from "../components/CalendarBar/CalendarBar";
 import ScreenTabTitles from "../components/UI/ScreenTabTitles";
 import TasksView from "../components/Tasks/TasksView";
+import GradientBackground from "../components/UI/GradientBackground";
 
 export const HomeScreen = () => {
   // const postQuery = trpc.post.all.useQuery();
   // const [showPost, setShowPost] = React.useState<string | null>(null);
   return (
-    <Layout level="1" style={style.container}>
+    // <Layout level="1" style={style.container}>
+    <GradientBackground>
       <SafeAreaView style={{ flex: 1 }}>
         <View className="pt-12" style={{ flex: 1 }}>
           <CalendarBar />
@@ -25,7 +27,8 @@ export const HomeScreen = () => {
           <TasksView />
         </View>
       </SafeAreaView>
-    </Layout>
+    </GradientBackground>
+    // </Layout>
   );
 };
 

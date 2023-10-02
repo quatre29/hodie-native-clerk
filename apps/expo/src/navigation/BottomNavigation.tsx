@@ -8,8 +8,9 @@ import { Colors } from "../helpers/Colors";
 import HeaderButton from "../components/UI/HeaderButton";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ROUTES } from "../constants";
+import { RootStackParamList } from "../constants/routes";
 
-const BottomTab = createBottomTabNavigator();
+const BottomTab = createBottomTabNavigator<RootStackParamList>();
 
 export const BottomNavigation = () => {
   return (

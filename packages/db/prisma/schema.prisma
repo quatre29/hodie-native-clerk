@@ -11,8 +11,65 @@ datasource db {
   relationMode = "prisma"
 }
 
-model Post {
-    id      String @id @default(cuid())
-    title   String
-    content String
+
+enum ChallengeTypeId {
+  MONK_MODE
+  FIVE_DAY
 }
+
+enum TaskTypeId {
+  HABBIT
+  NORMAL
+  NON_NEGOTIABLE
+}
+
+model User {
+  id         String      @id @default(uuid())
+  externalId String      @unique
+  username   String      @unique
+  email      String      @unique 
+  challenges Challenge[]
+  tasks      Task[]      @relation("AssignedTo")
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+}
+
+model ChallengeType {
+  id           String          @id @default(uuid())
+  name         String
+  type         ChallengeTypeId
+  durationDays Int
+  tasksPerDay  Int
+}
+
+model Challenge {
+  id         String      @id @default(uuid())
+  name       String
+  users      User[]
+  tasks      Task[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model TaskType {
+  id    String      @id @default(uuid())
+  name  String
+  tasks Task[]
+  type  TaskTypeId
+}
+
+model Task {
+  id           String     @id @default(uuid())
+  title        String
+  assignedTo   User       @relation("AssignedTo", fields: [assignedToId], references: [id])
+  assignedToId String
+  taskType     TaskType   @relation(fields: [taskTypeId], references: [id])
+  taskTypeId   String
+  challenge    Challenge? @relation(fields: [challengeId], references: [id])
+  challengeId  String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+ 

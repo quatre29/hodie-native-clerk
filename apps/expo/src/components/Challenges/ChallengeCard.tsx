@@ -2,6 +2,10 @@ import { StyleSheet, View, Dimensions, Image, Platform } from "react-native";
 import React from "react";
 import { IChallenge } from "../../constants/challenges";
 import { Text, Button } from "@ui-kitten/components";
+import { COLORS, ROUTES } from "../../constants";
+import { useNavigation } from "@react-navigation/native";
+import { NavigationProp } from "../../helpers/globalTypes";
+import Card from "../UI/Card";
 
 interface ChallengeCardProps {
   challenge: IChallenge | Partial<IChallenge>;
@@ -14,13 +18,19 @@ const SPACING = 10;
 const DUMMY_ITEM_SIZE = (width - ITEM_SIZE) / 2;
 
 const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
+  const navigation = useNavigation<NavigationProp>();
+
+  function handleNavigation() {
+    navigation.navigate(ROUTES.CHALLENGE, { challenge });
+  }
+
   if (!challenge.title) {
     return <View style={{ width: DUMMY_ITEM_SIZE }}></View>;
   }
 
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
+      <Card customStyles={styles.imageContainer}>
         <Image style={styles.posterImage} source={{ uri: challenge.cardImg }} />
         <Text category="h4" numberOfLines={1}>
           {challenge.title}
@@ -32,11 +42,11 @@ const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
           scrambled it to make a type specimen book.
         </Text>
         <View className="w-full">
-          <Button appearance="ghost" status="info">
+          <Button appearance="ghost" status="info" onPress={handleNavigation}>
             View more
           </Button>
         </View>
-      </View>
+      </Card>
     </View>
   );
 };
@@ -50,9 +60,6 @@ const styles = StyleSheet.create({
   imageContainer: {
     marginHorizontal: SPACING,
     padding: SPACING * 2,
-    alignItems: "center",
-    borderRadius: 34,
-    backgroundColor: "#141929",
     width: "85%",
   },
   posterImage: {

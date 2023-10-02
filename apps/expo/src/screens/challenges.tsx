@@ -8,28 +8,15 @@ import {
   Image,
 } from "react-native";
 import React, { useLayoutEffect } from "react";
-import { Layout, Text } from "@ui-kitten/components";
-import {
-  CHALLENGES,
-  ChallengeDifficulty,
-  IChallenge,
-} from "../constants/challenges";
+import { CHALLENGES, IChallenge } from "../constants/challenges";
 import ChallengeCard from "../components/Challenges/ChallengeCard";
 import MaskedView from "@react-native-community/masked-view";
 import Svg, { Rect } from "react-native-svg";
 import { LinearGradient } from "expo-linear-gradient";
-import {
-  RouteProp,
-  NavigationProp,
-  ParamListBase,
-} from "@react-navigation/native";
+import { COLORS } from "../constants";
+import { ROUTES, RootStackNavigationProp } from "../constants/routes";
 
-type ChallengesScreenNavigationProp = NavigationProp<ParamListBase, string>;
-
-type ChallengesScreenProps = {
-  route: RouteProp<ParamListBase, string>;
-  navigation: ChallengesScreenNavigationProp;
-};
+type ChallengesScreenProps = RootStackNavigationProp<ROUTES.CHALLENGES>;
 
 interface BackdropProps {
   challenges: IChallenge[] | Partial<IChallenge>[];
@@ -95,7 +82,7 @@ const Backdrop = ({ challenges, scrollX }: BackdropProps) => {
         }}
       />
       <LinearGradient
-        colors={["transparent", "#222b45"]}
+        colors={["transparent", COLORS.DARK_BACKGROUND]}
         style={{
           width,
           height: BACKDROP_HEIGHT,
@@ -124,7 +111,8 @@ export const ChallengesScreen = ({ navigation }: ChallengesScreenProps) => {
   ];
 
   return (
-    <Layout level="1" style={style.container}>
+    // <Layout level="1" style={style.container}>
+    <View style={styles.container}>
       <Backdrop challenges={challenges} scrollX={scrollX} />
       <Animated.FlatList
         showsHorizontalScrollIndicator={false}
@@ -164,14 +152,16 @@ export const ChallengesScreen = ({ navigation }: ChallengesScreenProps) => {
           );
         }}
       />
-    </Layout>
+      {/* </Layout> */}
+    </View>
   );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
     paddingTop: 40,
+    backgroundColor: COLORS.DARK_BACKGROUND,
   },
 });

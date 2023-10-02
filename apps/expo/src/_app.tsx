@@ -17,6 +17,9 @@ import { Settings } from "./screens/settings/settings";
 import { ROUTES } from "./constants";
 import { DrawerNavigation } from "./navigation/DrawerNavigation";
 import TaskModal from "./components/Tasks/TaskModal";
+import ChallengeModal from "./components/Challenges/ChallengeModal";
+import { RootStackParamList } from "./constants/routes";
+
 // const HomeScreenButton = ({ onPress }: { onPress: () => void }) => {
 //   return (
 //     <TouchableOpacity onPress={onPress}>
@@ -36,7 +39,7 @@ import TaskModal from "./components/Tasks/TaskModal";
 //     </TouchableOpacity>
 //   );
 // };
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const App = () => {
   return (
@@ -62,7 +65,7 @@ export const App = () => {
                     }}
                   >
                     <Stack.Screen
-                      name="MainScreen"
+                      name={ROUTES.MAIN_SCREEN}
                       component={DrawerNavigation}
                       options={{
                         headerShown: false,
@@ -78,6 +81,13 @@ export const App = () => {
                     <Stack.Screen
                       name={ROUTES.TASK}
                       component={TaskModal}
+                      options={{
+                        presentation: "modal",
+                      }}
+                    />
+                    <Stack.Screen
+                      name={ROUTES.CHALLENGE}
+                      component={ChallengeModal}
                       options={{
                         presentation: "modal",
                       }}
